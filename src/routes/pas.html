@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/yeti/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body style="   margin:0; background-color: #fafafa;">
+    <div style="  font-size: 2rem; color:whitesmoke;  background-color: #3f51b5;">
+        <!-- <br> -->
+        <b>SIGAP</b>
+        <!-- <br> -->
+        <!-- <br> -->
+    </div>
+    <div style="height: 100%; margin:0;padding:0; background-color: #fafafa;">
+        <br>
+        <br>
+        <form style=" background-color: #fafafa;
+                      text-align: center;" name="myForm" action="/api/rpaspos/"
+            onsubmit="return validateForm()">
+            <label for="pas">Ingrese una nueva contraseña:</label>
+            <input type="password" id="pas" name="pass"><br><br>
+            <label for="rpas">Repita la contraseña ingresada:</label>
+            <input type="password" id="rpas"><br><br>
+            <input type="submit" value="Cambiar contraseña">
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            var pass = document.getElementById("pas").value;
+            var rpass = document.getElementById("rpas").value;
+            if (pass == "") {
+                alert("Debe ingresar una contraseña");
+                return false;
+            }
+
+            if (pass != rpass) {
+                alert("Las contraseñas ingresadas no coinciden");
+                return false;
+            }
+        }
+    </script>
+</body>
+
+</html>
