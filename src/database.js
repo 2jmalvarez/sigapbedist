@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// mongoose.connect('mongodb+srv://juan:juan@elcluster-r0s4h.mongodb.net/angular-auth?retryWrites=true&w=majority', {
-mongoose.connect('mongodb://localhost/angular-auth', {
+mongoose.connect('mongodb+srv://juan:juan@elcluster-r0s4h.mongodb.net/angular-auth?retryWrites=true&w=majority', {
+// mongoose.connect('mongodb://localhost/angular-auth', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
