@@ -294,7 +294,8 @@ router.get('/rpaspos?', async (req, res) => {
 
         if (payload) {
                 let usuario = await Usuario.findOneAndUpdate({ _id: payload._id }, { $set: { contrasenia: mensaje[1] } })
-                res.redirect('http://192.168.0.95:4200/signin')
+                // res.redirect('http://192.168.0.95:4200/signin')
+                res.redirect('2jmalvarez.github.io/sigapfedist')
         } else {
                 res.send('Se produjo un error, por favor comuniquese con su superior inmediato')
         }
