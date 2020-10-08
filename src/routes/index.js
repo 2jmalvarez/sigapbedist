@@ -1716,7 +1716,7 @@ async function GuardarLog(base, nElemento, accion) {
                 const informe = await Informe.findOne({ auditorias: nElemento['auditorias'] })
                 const auditoria = await Auditoria.findOne({ _id: nElemento['auditorias'] })
                 const loginfo = await new LogInforme({
-                        usuarios: usuario._id,
+                        usuarios: usuario['_id'],
                         informes: informe._id,
                         accion: accion,
                         estado: auditoria.estado,

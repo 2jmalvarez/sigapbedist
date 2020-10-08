@@ -26,6 +26,7 @@ const informeSchema = new Schema({
       observaciones: String,
       Fortalezas: String,
       Oportunidades: String,
+      aplica: Boolean,
     }
   ],
   items: [
@@ -35,6 +36,7 @@ const informeSchema = new Schema({
         ref: 'Item'
         , autopopulate: true
       },
+      aplica: Boolean,
       observaciones: String,
     }
   ],
