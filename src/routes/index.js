@@ -293,9 +293,10 @@ router.get('/rpaspos?', async (req, res) => {
         // res.send(payload._id)
 
         if (payload) {
-                let usuario = await Usuario.findOneAndUpdate({ _id: payload._id }, { $set: { contrasenia: mensaje[1] } })
+                let PassEncriptada = await Usuario.encryptPassword(mensaje[1])
+                let usuario = await Usuario.findOneAndUpdate({ _id: payload._id }, { $set: { contrasenia:  PassEncriptada} })
                 // res.redirect('http://192.168.0.95:4200/signin')
-                res.redirect('2jmalvarez.github.io/sigapfedist')
+                res.redirect('http://192.168.0.95:4200/signin')
         } else {
                 res.send('Se produjo un error, por favor comuniquese con su superior inmediato')
         }
@@ -337,6 +338,7 @@ router.post('/signup', async (req, res) => {
         //     console.log(nombre, apellido, correo, legajo, contrasenia, profesiones);
 
         const nuevoUsuario = new Usuario({ nombre, apellido, correo, legajo, contrasenia, profesiones, mostrar });
+        nuevoUsuario.contrasenia = await Usuario.encryptPassword(nuevoUsuario.contrasenia);
         await nuevoUsuario.save();
         return res.status(200).send('Usuario registrado correctamente, contáctese con Marisa Rodenas (marodenas@pami.org.ar) para finalizar su registración.');
         // const token = await jwt.sign({ _id: nuevoUsuario._id }, 'secretkey');
@@ -348,8 +350,13 @@ router.post('/signin', async (req, res) => {
 
         const user = await Usuario.findOne({ legajo });
         if (!user || legajo == null) return res.status(401).send('No se encontro al usuario');
-        if (user.contrasenia !== contrasenia) return res.status(401).send('Datos de usuario o contraseña incorrectos');
-
+        const matchPassword = await Usuario.comparePassword(
+                contrasenia,
+                user.contrasenia
+                );
+                
+        if (!matchPassword) return res.status(401).send('Datos de usuario o contraseña incorrectos');
+        // if (user.contrasenia !== contrasenia) return res.status(401).send('Datos de usuario o contraseña incorrectos');
 
         console.log('====================================');
         console.log('====================================');
@@ -1807,7 +1814,12 @@ router.post('/dash/:base', verifyToken, async (req, res) => {
 
 
 
+router.post('/cpas',verifyToken, async (req, res) => {
 
+
+
+
+})
 
 
 
@@ -1816,3 +1828,6 @@ router.post('/dash/:base', verifyToken, async (req, res) => {
 
 
 module.exports = router;
+
+
+// router.get('/rpas/:token', async (req, res) => {})

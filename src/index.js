@@ -3,14 +3,20 @@ const cors = require('cors');
 const app = express();
 var morgan = require('morgan')
 var fs = require('fs');
+
+
 require('./database');
+
+// const {encriptarContrasenias} = require('./scripts/abmDB')
+// encriptarContrasenias()
+
 var path = require('path');
 // settings
 app.set('port', process.env.PORT || 4000)
-
 // middlewares
 app.use(express.json());
 app.use(cors());
+
 var accessLogStream = fs.createWriteStream(
   path.join(__dirname, 'access.log'), {flags: 'a'}
 );
