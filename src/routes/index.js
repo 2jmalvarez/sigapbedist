@@ -1287,9 +1287,9 @@ router.get('/pop/:base', verifyToken, async (req, res) => {
         supElemObj(Tipo, ['activo', '__v', 'updatedAt', 'createdAt'])
         let objPopulate3 = populateadaRec(Tipo, global.esquemas)
         // let objPopulate2 = populateadaCom(Tipo, global.esquemas)
-        console.log('===================objPopulate3=================');
-        console.log(objPopulate3);
-        console.log('================objPopulate3====================');
+        // console.log('===================objPopulate3=================');
+        // console.log(objPopulate3);
+        // console.log('================objPopulate3====================');
 
 
         // console.log('===================TIPO2=================');
@@ -1501,8 +1501,11 @@ router.put('/reginforme/:base', verifyToken, async (req, res) => {
                                 "==============ERROR=======================",
                                 error
                         ))
+                     
+
+                                console.log("Guardar informe y actualizar auditoria: ", auditoria, auditoria.cumplimiento, " kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkauxEstado",auxEstado,"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkinforme", informe)
+                        
                 GuardarLog("informes", nElemento, 'Actualiza')
-                console.log("Guardar informe y actualizar auditoria: ", auditoria, " kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", informe);
                 return res.status(200).json(informe)
         }
 
@@ -1814,12 +1817,55 @@ router.post('/dash/:base', verifyToken, async (req, res) => {
 
 
 
-router.post('/cpas',verifyToken, async (req, res) => {
+router.post('/cpass/aaaa/',verifyToken, async (req, res) => {
 
+        // let a = await Usuario.findOne({legajo: 'jma'}).catch(e=>console.log("e",e))
+        // await Usuario.findByIdAndUpdate({_id: a._id},{$set:{contrasenia: await Usuario.encryptPassword('jma')}})     
+           
 
+        const leg = req.body.legajo
+        const password = req.body.contrasenia
+        const newPassword = req.body.Ncontrasenia
+
+        console.log('*********************');
+        console.log(req.body);
+        console.log(req.body.legajo);
+        console.log(req.body.contrasenia);
+        console.log(req.body.Ncontrasenia);
+        // console.log(req.body);
+        console.log('*********************');
+
+        const usuario = await Usuario.findOne({legajo: leg}).catch(e=>console.log("e",e))
+       
+        let comparar = await Usuario.comparePassword(password,usuario.contrasenia)
+        console.log("comparar",comparar);
+        console.log("usuario",usuario);
+        if (comparar) {
+                console.log("usuario._id,newPassword");
+                console.log(usuario._id,newPassword);
+           await Usuario.findByIdAndUpdate({_id: usuario._id},{$set:{contrasenia: await Usuario.encryptPassword(newPassword)}})     
+           return res.status(200).json('contraseña actualizada')
+        } else {
+                console.log("todo mal");
+                console.log(leg )
+                console.log(password )
+                console.log(newPassword)
+                return res.status(406).json('contraseña incorrecta')
+        }
+
+    
 
 
 })
+
+// router.get('/cpass/aaaa/',verifyToken, async (req, res) => {
+
+//         console.log('*********************');
+//         console.log(req.body);
+//         console.log('*********************');
+//         return res.status(200)
+
+// })
 
 
 
